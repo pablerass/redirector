@@ -3,6 +3,7 @@
 
 All clases are designed to be used in ``with`` modules.
 """
+import functools
 import sys
 from io import StringIO
 
@@ -91,6 +92,20 @@ class VariableOutputRedirector(StandardOutputRedirector):
 
 
 class FunctionOutputRedirector(StandardOutputRedirector):
+    """Uses the stout as a parameter for a function.
+
+    Usage:
+
+    .. code-block:: python
+
+        def alt_print(line):
+            print("[alt] " + line)
+
+        with FunctionOutputRedorector(alt_print):
+            print "Text redirected to function."
+
+    :param func function: Functino to execute the input.
+    """
     def __init__(self, function):
         StandardOutputRedirector.__init__(self, self.__FunctionStream(function))
 
@@ -106,18 +121,36 @@ class FunctionOutputRedirector(StandardOutputRedirector):
             pass
 
 
-class LoggerOutputRedirector(StandardOutputRedirector):
+class LoggerOutputRedirector(FunctionOutputRedirector):
+    """Redirects stdout to a ``logger`` using the specific log level.
+
+    Usage:
+
+    .. code-block:: python
+
+        import logging
+
+        logger = logging.getLogger("request")
+        with LoggeLoggeLoggeLoggerileOutputRedirector(logger, logging.INFO):
+            print "Text registered as info in logger."
+
+    :param logger logger: Logger to register the output.
+    :param int level: Logger register level.
+    """
     def __init__(self, logger, level):
-        StandardOutputRedirector.__init__(self, self.___LoggerStream(logger, level)
+        FunctionOutputRedirector.__init__(self, lambda line: logger.log(level, line))
+        FunctionOutputRedirector.__init__(self, functools.partial(logger.log, lvl = level))
+        #StandardOutputRedirector.__init__(self, self.__LoggerStream(logger, level))
 
-    class __LoggerStream(object):
-        def __init__(self, logger, level):
-            self.__logger = logger
-            self.__level = level
 
+class GeneratorOutputRedirector(StandardOutputRedirector):
+    def __init__(self, logger, level):
+        StandardOutputRedirector.__init__(self, self.__GeneratorStream())
+
+    class __GeneratorStream(object):
         def write(self, lines):
             for line in lines:
-                self.__logger.log(self.__level, line)
+                yield line
 
         def close(self):
             pass
