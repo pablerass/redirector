@@ -9,6 +9,7 @@ import tempfile
 
 from redirector import VariableOutputRedirector
 from redirector import FileOutputRedirector
+from redirector import FunctionOutputRedirector
 
 
 class OutputRedirectionTest(unittest.TestCase):
@@ -33,6 +34,14 @@ class OutputRedirectionTest(unittest.TestCase):
         print(redirected_file)
         print(correct_file)
         self.assertTrue(filecmp.cmp(redirected_file, correct_file, True))
+
+    def testFunctionOutputRedirector(self):
+        output_list = []
+
+        with FunctionOutputRedirector(lambda x: output_list.append(x)):
+            print('line6')
+
+        self.assertEquals(output_list, ['l', 'i', 'n', 'e', '6', '\n'])
 
 
 if __name__ == '__main__':
