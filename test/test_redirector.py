@@ -7,9 +7,10 @@ import filecmp
 import os
 import tempfile
 
-from redirector import VariableOutputRedirector
 from redirector import FileOutputRedirector
 from redirector import FunctionOutputRedirector
+from redirector import NullOutputRedirector
+from redirector import VariableOutputRedirector
 
 
 class OutputRedirectionTest(unittest.TestCase):
@@ -20,6 +21,15 @@ class OutputRedirectionTest(unittest.TestCase):
             value = out.getvalue()
 
         self.assertEqual('line1\nline2\n', value)
+
+    def testNullOutputRedirector(self):
+        with VariableOutputRedirector() as out:
+            with NullOutputRedirector():
+                print('line1')
+                print('line2')
+            value = out.getvalue()
+
+        self.assertFalse(value)
 
     def testFileOutputRedirection(self):
         redirected_file = tempfile.NamedTemporaryFile().name
