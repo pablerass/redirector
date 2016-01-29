@@ -9,6 +9,7 @@ from io import StringIO
 
 __version__ = '0.1.0'
 
+
 class StandardOutputRedirector(object):
     """Redirects standard output to a *stream* object."""
 
@@ -158,7 +159,7 @@ class LoggerOutputRedirector(FunctionOutputRedirector):
         FunctionOutputRedirector.__init__(self, lambda line: logger.log(level,
                                                                         line))
         FunctionOutputRedirector.__init__(self, functools.partial(logger.log,
-                                                                  lvl = level))
+                                                                  lvl=level))
 
 
 class GeneratorOutputRedirector(StandardOutputRedirector):
