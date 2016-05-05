@@ -3,7 +3,7 @@
 from redirector import __version__
 from setuptools import setup, find_packages
 
-setup(name='redirector',
+setup(name='out-redirector',
       version=__version__,
       description="Manage and redirect standard output.",
       long_description=open('README.md').read(),

@@ -18,5 +18,5 @@ deploy:
   on:
     tags: true
     branch: master
-    repo: pablerass/out-redirector
+    repo: pablerass/redirector
     distributions: sdist
