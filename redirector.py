@@ -23,7 +23,6 @@ class StandardOutputRedirector(object):
         self.__old_stdout = None
 
     def __enter__(self):
-        """ """
         # Stores current stdout stream
         self.__old_stdout = sys.stdout
         # Redirect output to input_stream
@@ -31,7 +30,6 @@ class StandardOutputRedirector(object):
         return self.__input_stream
 
     def __exit__(self, type_, value, traceback):
-        """ """
         # Revert stdout modification
         self.__input_stream.close()
         sys.stdout = self.__old_stdout
@@ -52,7 +50,6 @@ class NullOutputRedirector(StandardOutputRedirector):
     """
 
     def __init__(self):
-        """ """
         StandardOutputRedirector.__init__(self, self.__DevNull())
 
     class __DevNull(object):
@@ -102,7 +99,6 @@ class VariableOutputRedirector(StandardOutputRedirector):
     """
 
     def __init__(self):
-        """ """
         StandardOutputRedirector.__init__(self, StringIO())
 
 
@@ -163,7 +159,6 @@ class LoggerOutputRedirector(FunctionOutputRedirector):
 
 
 class GeneratorOutputRedirector(StandardOutputRedirector):
-    """ """
     def __init__(self, logger, level):
         StandardOutputRedirector.__init__(self, self.__GeneratorStream())
 
