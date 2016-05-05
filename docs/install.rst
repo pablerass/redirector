@@ -1,4 +1,0 @@
-.. install_
-
-Install
-#######

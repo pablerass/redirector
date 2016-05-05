@@ -7,8 +7,6 @@
    :maxdepth: 2
 
    introduction
-   install
-   testing
    examples
 
 Redirector API
