@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 setup(name='out-redirector',
       version=__version__,
       description="Manage and redirect standard output.",
-      long_description=open('README.md').read(),
+      long_description=open('README').read(),
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Intended Audience :: Developers',
